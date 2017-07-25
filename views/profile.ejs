@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <script src="/public/js/jquery-3.2.1.js"></script>
+</head>
+<body>
+    <% if(user) {%>
+        <h2>Welcome <%=user.displayName%></h2><br>
+    <form action="/logout"><input type="submit" value="logout"></form>
+    <% } else {%>
+        <h1>Please Login to view <a href="/login">Login</a></h1>
+    <% }%>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <% if(user){%>
+        Hi <%user.username%> proceed to your <a href="/profile">profile</a>;
+    <%}else{%>
+        You are not logged in yet. Kindly <a href="/login">Login</a>
+    <%}%>
+</body>
+</html>
