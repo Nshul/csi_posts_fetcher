@@ -6,10 +6,50 @@
     <script src="/public/js/jquery-3.2.1.js"></script>
 </head>
 <body>
+    <script>
+        function postapost() {
+            FB.login(function () {
+                // Note: The call will only work if you accept the permission request
+                FB.api('/me/feed', 'post', {message: 'Hello, world!'});
+            }, {scope: 'publish_actions'});
+        }
+//        function displayposts(){
+//            console.log("clicked");
+//            posts = document.getElementById('dispposts');
+//            FB.login(function(){FB.api(
+//                "/126976547314225/feed",
+//                function (response) {
+//                    console.log("entered response");
+//                    if (response && !response.error) {
+//                        console.log("response exists");
+//                        for(i in response.data){
+//                            let t=document.createElement('li');
+//                            t.innerText=response.data[i].message;
+//                            posts.appendChild(t);
+//                        }
+//                    }
+//                }
+//            )});
+//        }
+    </script>
+
+
     <% if(user) {%>
         <h2>Welcome <%=user.displayName%></h2><br>
     <form action="/logout"><input type="submit" value="logout"></form>
-    <% } else {%>
+    <button type="button" onclick="postapost()">Post</button>
+    <form action="/getpostfrompage"><input type="submit" value="fetch posts"></form>
+    <ol id="dispposts">
+        <%if(postsdata!='NULL'){%>
+        <%for(let i in postsdata){ %>
+            <li><%=postsdata[i].id%><br>
+                LIKES:<%if(postsdata[i].likes){%><%=postsdata[i].likes.data.length%><%}else{%>0<%}%>
+                &nbsp;&nbsp;<%if(postsdata[i].shares){%>SHARES:<%=postsdata[i].shares.count%><%}else{%>SHARES:0<%}%><br>
+                <br>Message<%=postsdata[i].message%></li>
+        <%}%>
+        <%}%>
+    </ol>
+    <% } else {%>x
         <h1>Please Login to view <a href="/login">Login</a></h1>
     <% }%>
 
