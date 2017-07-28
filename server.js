@@ -7,6 +7,8 @@ const passport = require('./config/passport');
 const bp = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+const db = require('./config/db');
+
 app.use(session({
     secret: 'somesecret',
     resave: false,
@@ -32,6 +34,10 @@ app.get('/login',(req,res)=>{
     res.render('login');
 });
 
+app.get('/checking',(req,res)=>{
+    res.render('checking',{postsdata:'null'});
+});
+
 app.get('/profile',(req,res)=>{
     let userb=req.user;
     console.log("Data at /profile:");console.log(userb);
@@ -54,18 +60,42 @@ app.get('/auth/facebook/callback',
 let x;
 
 app.get('/getpostfrompage',(req,res,next)=>{
-    passport.FB.api("/126976547314225/feed?fields=shares,likes,message",async function (response) {
+    passport.FB.api("/126976547314225/posts?fields=shares,likes,message",function (response) {
             console.log("entered getpostsfrompage");
             if (response && !response.error) {
                 console.log("response exists");
-                console.log(response.data);
-                x=response.data;
+                db.insertposts(response.data).then((val)=>{
+                    console.log(val);
+                    console.log(response.data);
+                    console.log("Now calling and dsiplaing from db");
+                    db.displaypost().then((data)=>{
+                        x=data;
+                        console.log("Entered displaypost");
+                        console.log(x);
+                        res.render('profile', {user: req.user, postsdata: x});
+                    }).catch((err)=>{
+                        console.log("Error");
+                        console.log(err);
+                    });
+                }).catch((val)=>{
+                    console.log(val);
+                })
             }
-            res.render('profile', {user: req.user, postsdata: x});
         }
     );
 });
 
+app.get('/viewallposts',(req,res,next)=>{
+    db.displaypost().then((data)=>{
+        x=data;
+        console.log("Entered displaypost");
+        console.log(x);
+        res.render('checking', {user: req.user, postsdata: x});
+    }).catch((err)=>{
+        console.log("Error");
+        console.log(err);
+    });
+})
 
 app.listen(5400, function () {
     console.log("Server started on http://localhost:5400");

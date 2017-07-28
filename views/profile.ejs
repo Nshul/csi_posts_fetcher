@@ -42,10 +42,10 @@
     <ol id="dispposts">
         <%if(postsdata!='NULL'){%>
         <%for(let i in postsdata){ %>
-            <li><%=postsdata[i].id%><br>
-                LIKES:<%if(postsdata[i].likes){%><%=postsdata[i].likes.data.length%><%}else{%>0<%}%>
-                &nbsp;&nbsp;<%if(postsdata[i].shares){%>SHARES:<%=postsdata[i].shares.count%><%}else{%>SHARES:0<%}%><br>
-                <br>Message<%=postsdata[i].message%></li>
+        <li><br>
+            LIKES:<%=postsdata[i].likes%>
+            &nbsp;&nbsp;SHARES:<%=postsdata[i].shares%><br>
+            <br>Message<%=postsdata[i].message%></li>
         <%}%>
         <%}%>
     </ol>

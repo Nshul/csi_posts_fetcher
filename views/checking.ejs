@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/viewallposts"><input type="submit" value="fetch posts"></form>
+<ol id="dispposts">
+    <%if(postsdata!="null"){%>
+    <%for(let i in postsdata){ %>
+    <li><br>
+        LIKES:<%=postsdata[i].likes%>
+        &nbsp;&nbsp;SHARES:<%=postsdata[i].shares%><br>
+        <br>Message<%=postsdata[i].message%></li>
+    <%}%>
+    <%}%>
+</ol>
+
+</body>
+</html>
