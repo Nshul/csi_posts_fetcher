@@ -1,0 +1,9 @@
+<!--<li><img class="col post_profile_pic" src="https://scontent.xx.fbcdn.net/v/t1.0-1/c6.0.50.50/p50x50/10352376_881258811885991_7959390306461901352_n.jpg?oh=5bee976ccd02493a5148d551cde83649&oe=5A308E1F">-->
+            <!--<br>-->
+            <!--LIKES:<%=postsdata[i].likes%>-->
+            <!--&nbsp;&nbsp;SHARES:<%=postsdata[i].shares%><br>-->
+            <!--<br>Message<%=postsdata[i].message%><br>-->
+            <!--<%if(postsdata[i].picture){%>-->
+                <!--<img class="post_picture" src=<%=postsdata[i].picture%>>-->
+            <!--<%}%>-->
+        <!--</li>-->

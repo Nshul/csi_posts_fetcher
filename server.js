@@ -41,7 +41,8 @@ app.get('/checking',(req,res)=>{
 app.get('/profile',(req,res)=>{
     let userb=req.user;
     console.log("Data at /profile:");console.log(userb);
-    res.render('profile',{appid:process.env.CLIENT_ID,user:userb,postsdata: 'NULL'});
+    res.render('profile',{//appid:process.env.CLIENT_ID,
+        user:userb,postsdata: 'NULL'});
 });
 
 app.get('/logout', function(req, res){
@@ -58,27 +59,48 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/login' }));
 
 let x;
-
+var promises=[];
 app.get('/getpostfrompage',(req,res,next)=>{
-    passport.FB.api("/126976547314225/posts?fields=shares,likes,message",function (response) {
+    passport.FB.api("/126976547314225/posts?fields=shares,likes,message,full_picture,created_time",function (response) {
             console.log("entered getpostsfrompage");
             if (response && !response.error) {
                 console.log("response exists");
-                db.insertposts(response.data).then((val)=>{
-                    console.log(val);
-                    console.log(response.data);
+                console.log(response);
+                // db.insertposts(response.data).then((val)=>{
+                //     console.log(val);
+                //     console.log(response.data);
+                //     console.log("Now calling and dsiplaing from db");
+                //     db.displaypost().then((data)=>{
+                //         x=data;
+                //         console.log("Entered displaypost");
+                //         console.log(x);
+                //         res.render('profile', {user: req.user, postsdata: x});
+                //     }).catch((err)=>{
+                //         console.log("Error");
+                //         console.log(err);
+                //     });
+                // }).catch((val)=>{
+                //     console.log(val);
+                // })
+                for(let i in response.data){
+                    console.log("logging response.data for :"+i);
+                    // console.log(response.data[i]);
+                    promises.push(db.insertpost(response.data[i]));
+                }
+                Promise.all(promises).then(()=>{
                     console.log("Now calling and dsiplaing from db");
                     db.displaypost().then((data)=>{
                         x=data;
                         console.log("Entered displaypost");
-                        console.log(x);
+                        // console.log(x);
                         res.render('profile', {user: req.user, postsdata: x});
                     }).catch((err)=>{
                         console.log("Error");
                         console.log(err);
                     });
-                }).catch((val)=>{
-                    console.log(val);
+                }).catch((err)=>{
+                    console.log("Error in promises");
+                    console.log(err);
                 })
             }
         }

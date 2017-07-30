@@ -19,7 +19,9 @@ const Posts = db.define('posts',{
     postid: Sequelize.DataTypes.STRING,
     message: Sequelize.DataTypes.TEXT,
     likes: Sequelize.DataTypes.INTEGER,
-    shares: Sequelize.DataTypes.INTEGER
+    shares: Sequelize.DataTypes.INTEGER,
+    picture: Sequelize.DataTypes.STRING,
+    created_time: Sequelize.DataTypes.DATE
 },{charset: 'utf8',collate: 'utf8_unicode_ci'});
 
 function insertposts(arr){
@@ -43,17 +45,30 @@ function displaypost(){
 }
 
 function insertpost(postsdata) {
-    let likes=0,shares=0;
+    let likes=0,shares=0,picture=null;
     if(postsdata.likes)
         likes = postsdata.likes.data.length;
     if(postsdata.shares)
         shares=postsdata.shares.count;
-
+    if(postsdata.full_picture) {
+        console.log("picture present:");
+        console.log(postsdata.full_picture);
+        picture = postsdata.full_picture;
+        console.log("displaying picture variable:");
+        console.log(picture);
+    }
+    console.log("Time:");
+    console.log(postsdata.created_time);
+    let Time = new Date(postsdata.created_time);
+    console.log(Time.getDate()+'/'+(Time.getMonth()+1)+'/'+Time.getFullYear()+" "+Time.getHours()+':'+Time.getMinutes()+':'+Time.getSeconds());
+    console.log("this is layman time");
     return Posts.findOrCreate({where: {postid: postsdata.id},defaults: {
         postid: postsdata.id,
         message: postsdata.message,
         likes: likes,
-        shares: shares
+        shares: shares,
+        picture: picture,
+        created_time: Time
     }}).spread((user,created)=>{
         if(created) {
             console.log("Created");
@@ -68,4 +83,4 @@ db.sync().then(function () {
     console.log("database ready");
 });
 
-module.exports = {insertposts,displaypost};
+module.exports = {insertpost,displaypost};
