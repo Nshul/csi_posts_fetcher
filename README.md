@@ -2,7 +2,7 @@
 
 FB Page posts fetcher for CSI NSIT 
 
-##Pre Requisites
+## Pre Requisites
 
 You will need
 
@@ -12,7 +12,7 @@ You will need
 *Mysql
 ```
 
-##For Running
+## For Running
 
 * `git clone <repo-url>` this repo wherever you want
 * cd into this repo
