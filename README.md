@@ -6,11 +6,8 @@ FB Page posts fetcher for CSI NSIT
 
 You will need
 
-```
-*[Node JS](https://nodejs.org)
-*[npm (installed with Node JS)](https://nodejs.org)
-*Mysql
-```
+* [Node.js](https://nodejs.org/) (with NPM)
+* Mysql
 
 ## For Running
 
