@@ -7,6 +7,9 @@
     max-width:600px;
     margin-bottom: 10px;
 }
+.post_card:hover{
+    box-shadow: grey 3px 3px 3px 5px ;
+}
 .post_heading{
     margin-bottom: 0;
     position: absolute;
@@ -26,7 +29,18 @@
     position: absolute;
     top: 50px;
     left: 30px;
-    color: red;
+}
+.user_profile_pic{
+    border-radius: 20px;
+    max-height: 100px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.user_profile_head{
+    position: relative;
+    top:30px;
+    left: 80px;
 }
 .spinner {
     margin: 100px auto;

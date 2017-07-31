@@ -12,44 +12,34 @@
     <link rel="stylesheet" href="/public/css/profile_style.css">
 </head>
 <body>
-    <!--<script>-->
-        <!--function postapost() {-->
-            <!--FB.login(function () {-->
-                <!--// Note: The call will only work if you accept the permission request-->
-                <!--FB.api('/me/feed', 'post', {message: 'Hello, world!'});-->
-            <!--}, {scope: 'publish_actions'});-->
-        <!--}-->
-<!--//        function displayposts(){-->
-<!--//            console.log("clicked");-->
-<!--//            posts = document.getElementById('dispposts');-->
-<!--//            FB.login(function(){FB.api(-->
-<!--//                "/126976547314225/feed",-->
-<!--//                function (response) {-->
-<!--//                    console.log("entered response");-->
-<!--//                    if (response && !response.error) {-->
-<!--//                        console.log("response exists");-->
-<!--//                        for(i in response.data){-->
-<!--//                            let t=document.createElement('li');-->
-<!--//                            t.innerText=response.data[i].message;-->
-<!--//                            posts.appendChild(t);-->
-<!--//                        }-->
-<!--//                    }-->
-<!--//                }-->
-<!--//            )});-->
-<!--//        }-->
-    <!--</script>-->
+
+    <!--To check whether user is logged in or not-->
 
     <% if(user) {%>
-    <img class="user_profile_pic" src="http://graph.facebook.com/<%=user.id%>/picture">
-        <h2>Welcome <%=user.displayName%></h2><br>
-    <form action="/logout"><input type="submit" value="logout"></form>
-    <!--<button type="button" onclick="postapost()">Post</button>-->
-    <form action="/getpostfrompage"><input type="submit" value="fetch posts"></form>
+    <!--If user is logged in-->
     <div class="container">
+    <div>
+    <img class="user_profile_pic" src="http://graph.facebook.com/<%=user.id%>/picture">
+        <h2 class="user_profile_head">Welcome <%=user.displayName%></h2><br>
+    </div><br>
+    <!--This Logs out the user-->
+
+    <form action="/logout"><input type="submit" class="btn btn-primary" value="logout"></form><br>
+
+    <!--Clicking This fetches the posts from DB-->
+
+    <form action="/getpostfrompage"><input type="submit" class="btn btn-primary" value="fetch posts"></form>
+    <br>
+
+        <!--Creating a list of all the posts-->
+
         <ul id="dispposts">
             <%if(postsdata!='NULL'){%>
             <%for(let i in postsdata){ %>
             <li>
+
+                <!--Creating all posts using Bootstrap Cards-->
+
                 <div class="card post_card">
                     <div class="card-block">
                         <div>
@@ -79,8 +69,9 @@
             <%}%>
         </ul></div>
 
+    <!--In case no user is logged in but this page is accessed-->
     <% } else {%>
-        <h1>Please Login to view <a href="/login">Login</a></h1>
+        <h1>Please <a href="/login">Login</a> to view </h1>
     <% }%>
 
 </body>

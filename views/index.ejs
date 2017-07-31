@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <script src="/public/js/bootstrap.js"></script>
 </head>
 <body>
-    <% if(user){%>
-        Hi <%user.username%> proceed to your <a href="/profile">profile</a>;
-    <%}else{%>
-        You are not logged in yet. Kindly <a href="/login">Login</a>
-    <%}%>
+    <div class="container">
+        <% if(user){%>
+            <div class="container">
+                <p class="lead">Hi <img src="http://graph.facebook.com/<%=user.id%>/picture"> <%=user.displayName%> proceed to your <a href="/profile">Profile</a></p>
+            </div>
+        <%}else{%>
+        <h1 class="display-2">Welcome To CSI-FB-POSTS fetcher</h1>
+        <p class="lead">It seems either This is your first visit or You are logged out. Kindly Proceed to <a href="/login">Login</a></p>
+        <%}%>
+    </div>
 </body>
 </html>
